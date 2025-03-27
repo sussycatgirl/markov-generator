@@ -308,7 +308,7 @@ impl<T, M: Map<T>> Chain<T, M> {
     /// them by value, simply use [`Iterator::cloned`] (as long as `T` is
     /// [`Clone`]).
     pub fn generate(&self) -> Generator<'_, T, rand::rngs::ThreadRng, M> {
-        self.generate_with_rng(rand::thread_rng())
+        self.generate_with_rng(rand::rng())
     }
 
     /// Like [`Self::generate`], but takes a custom random number generator.
@@ -330,7 +330,7 @@ impl<T, M: Map<T>> Chain<T, M> {
     where
         B: Borrow<T>,
     {
-        self.get_with_rng(items, rand::thread_rng())
+        self.get_with_rng(items, rand::rng())
     }
 
     /// Like [`Self::get`], but takes a custom random number generator.
@@ -352,7 +352,7 @@ impl<T, M: Map<T>> Chain<T, M> {
         R: Rng,
     {
         let freq = self.map.slice_get(&items)?;
-        let mut n = rng.gen_range(0..freq.total);
+        let mut n = rng.random_range(0..freq.total);
         for (item, count) in freq.map.iter() {
             n = if let Some(n) = n.checked_sub(*count) {
                 n
