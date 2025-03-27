@@ -18,8 +18,9 @@ std = ["serde?/std", "rand/std", "rand/std_rng"]
 doc_cfg = []
 
 [dependencies.rand]
-version = "0.8"
+version = "0.9"
 default-features = false
+features = ["std_rng", "thread_rng"]
 
 [dependencies.serde]
 version = "1.0"
